@@ -1,0 +1,334 @@
+MCA203T - OBJECT ORIENTED PROGRAMMING USING JAVA
+Assignment-01
+MCA III Semester
+
+Q1. Explain Java's evolution from C/C++ and the role of bytecode, JVM and the Internet in Java's design.
+
+Answer:
+
+Java was developed by Sun Microsystems in the early 1990s, mainly under the leadership of James Gosling. Its design was influenced by languages such as C and C++, but Java was created to be simpler, safer, portable, and suitable for network-based applications.
+
+Java inherited several familiar features from C/C++, such as variables, operators, expressions, control statements, and a syntax based on braces. However, Java removed or avoided some complex features of C++, such as explicit pointer manipulation, multiple inheritance through classes, and manual memory deallocation. Java also introduced automatic garbage collection and strong object-oriented programming support.
+
+A major feature of Java is its use of bytecode. When a Java source program is compiled, the Java compiler converts the source code into an intermediate form called bytecode, normally stored in a .class file. Bytecode is not specific to one operating system or processor.
+
+The Java Virtual Machine (JVM) executes this bytecode. Because different operating systems can have their own JVM implementations, the same Java bytecode can run on different platforms. This is the basic idea behind Java's "write once, run anywhere" approach.
+
+The Internet also influenced Java's design. Java was designed to support networked and distributed applications. Its portability, security features, networking libraries, and bytecode execution made it suitable for programs that could be distributed through networks and run on different computers.
+
+The basic process is:
+
+Java Source Code (.java)
+        |
+        v
+Java Compiler (javac)
+        |
+        v
+Bytecode (.class)
+        |
+        v
+JVM
+        |
+        v
+Operating System / Hardware
+
+Thus, C/C++ influenced Java's syntax and programming concepts, while bytecode and the JVM provided portability and the Internet influenced Java's networking and distributed-application capabilities.
+
+
+Q2. Explain garbage collection, object reachability and the role of new in object creation.
+
+Answer:
+
+Garbage collection is Java's automatic memory-management mechanism. When objects are created in a Java program, memory is allocated for them. When an object is no longer reachable by the program, the Java Virtual Machine can identify it as eligible for garbage collection and reclaim its memory.
+
+Java programmers normally do not have to explicitly free objects using a function such as free() or delete. This reduces the possibility of memory-management errors.
+
+Object reachability determines whether an object can still be accessed by the running program. An object is generally considered reachable when it can be accessed through active references, such as local variables, instance fields, or other reachable objects.
+
+For example:
+
+Student s = new Student();
+
+Here, s is a reference variable that refers to a Student object. As long as the object can be reached through a live reference, it is not normally eligible for garbage collection.
+
+If the reference is removed:
+
+s = null;
+
+and there are no other references to that Student object, the object becomes unreachable and may become eligible for garbage collection.
+
+The new keyword is used to create an object in Java. It allocates memory for the object and invokes the appropriate constructor.
+
+Example:
+
+Student s = new Student();
+
+In this statement:
+- Student is the class type.
+- s is the reference variable.
+- new creates the Student object.
+- Student() invokes the constructor.
+
+Garbage collection is automatic, but its exact execution time is controlled by the JVM. A programmer should not depend on garbage collection occurring at a particular moment.
+
+Therefore, new is responsible for creating objects, references determine object reachability, and garbage collection reclaims memory associated with objects that are no longer reachable.
+
+
+Q3. Trace a Java expression containing arithmetic, relational, logical, assignment and increment operators, showing operator precedence.
+
+Answer:
+
+Consider the following Java code:
+
+int a = 5;
+int b = 3;
+int c = 2;
+
+int result = a + b * c > 10 && ++a < 10;
+
+To understand the expression, Java evaluates operators according to their precedence and associativity.
+
+Expression:
+
+a + b * c > 10 && ++a < 10
+
+Step 1: Increment operator
+
+++a has higher precedence than the relational and logical operators. Initially:
+
+a = 5
+
+After ++a:
+
+a = 6
+
+Step 2: Multiplication
+
+b * c is evaluated before addition:
+
+3 * 2 = 6
+
+Step 3: Addition
+
+a + 6:
+
+6 + 6 = 12
+
+Step 4: First relational operation
+
+12 > 10
+
+Result:
+
+true
+
+Step 5: Second relational operation
+
+++a < 10
+
+6 < 10
+
+Result:
+
+true
+
+Step 6: Logical AND
+
+true && true
+
+Result:
+
+true
+
+Step 7: Assignment
+
+The final Boolean value is assigned to result:
+
+result = true;
+
+Thus, the final values are:
+
+a = 6
+b = 3
+c = 2
+result = true
+
+Important precedence order used in this expression:
+
+1. Increment (++a)
+2. Multiplication (*)
+3. Addition (+)
+4. Relational comparison (<, >)
+5. Logical AND (&&)
+6. Assignment (=)
+
+Note: Java's logical AND operator && also uses short-circuit evaluation. If the left side is false, the right side may not be evaluated.
+
+
+Q4. Design a Student class using fields, constructors, methods, access modifiers and this keyword.
+
+Answer:
+
+A Student class can be designed using private fields, constructors, public methods, and the this keyword.
+
+Java Program:
+
+class Student {
+    private int rollNo;
+    private String name;
+    private double marks;
+
+    // Default constructor
+    public Student() {
+        this.rollNo = 0;
+        this.name = "Unknown";
+        this.marks = 0.0;
+    }
+
+    // Parameterized constructor
+    public Student(int rollNo, String name, double marks) {
+        this.rollNo = rollNo;
+        this.name = name;
+        this.marks = marks;
+    }
+
+    // Method to display student information
+    public void display() {
+        System.out.println("Roll No: " + this.rollNo);
+        System.out.println("Name: " + this.name);
+        System.out.println("Marks: " + this.marks);
+    }
+
+    // Getter method
+    public double getMarks() {
+        return this.marks;
+    }
+
+    // Setter method
+    public void setMarks(double marks) {
+        this.marks = marks;
+    }
+
+    public static void main(String[] args) {
+        Student s1 = new Student(101, "Rahul", 85.5);
+        s1.display();
+
+        s1.setMarks(90.0);
+        System.out.println("Updated Marks: " + s1.getMarks());
+    }
+}
+
+Explanation:
+
+- private is an access modifier that restricts direct access to the fields from outside the class.
+- public methods can be used to access or modify the object's data.
+- The default constructor initializes the object with default values.
+- The parameterized constructor initializes an object using supplied values.
+- The this keyword refers to the current object. For example, this.name refers to the current object's name field.
+- Getter and setter methods support encapsulation by controlling access to private data.
+
+Expected output:
+
+Roll No: 101
+Name: Rahul
+Marks: 85.5
+Updated Marks: 90.0
+
+
+Q5. Develop a small Java application combining constructors, overloaded methods, recursion and encapsulated data.
+
+Answer:
+
+The following application represents a Student Result system. It combines:
+- Constructors
+- Method overloading
+- Recursion
+- Encapsulation
+
+Java Program:
+
+class StudentResult {
+    private String name;
+    private int rollNo;
+    private int[] marks;
+
+    // Parameterized constructor
+    public StudentResult(String name, int rollNo, int[] marks) {
+        this.name = name;
+        this.rollNo = rollNo;
+        this.marks = marks;
+    }
+
+    // Getter methods
+    public String getName() {
+        return name;
+    }
+
+    public int getRollNo() {
+        return rollNo;
+    }
+
+    // Overloaded method 1
+    public int calculateTotal() {
+        return calculateTotal(0);
+    }
+
+    // Overloaded method 2
+    public int calculateTotal(int index) {
+        if (index == marks.length) {
+            return 0;
+        }
+
+        return marks[index] + calculateTotal(index + 1);
+    }
+
+    // Another overloaded method
+    public double calculateAverage() {
+        return (double) calculateTotal() / marks.length;
+    }
+
+    public void displayResult() {
+        System.out.println("Student Name: " + name);
+        System.out.println("Roll No: " + rollNo);
+        System.out.println("Total Marks: " + calculateTotal());
+        System.out.println("Average Marks: " + calculateAverage());
+    }
+
+    public static void main(String[] args) {
+        int[] marks = {80, 75, 90, 85, 70};
+
+        StudentResult student =
+            new StudentResult("Kajal", 101, marks);
+
+        student.displayResult();
+    }
+}
+
+Explanation:
+
+1. Constructor:
+The constructor StudentResult(String name, int rollNo, int[] marks) initializes the student's data when an object is created.
+
+2. Encapsulation:
+The fields name, rollNo, and marks are declared private. They are accessed through public methods. This protects the internal data of the object.
+
+3. Method overloading:
+calculateTotal() and calculateTotal(int index) have the same method name but different parameter lists. This demonstrates method overloading.
+
+4. Recursion:
+calculateTotal(int index) calls itself with index + 1. It continues until index becomes equal to the length of the marks array.
+
+5. Object creation:
+The new keyword creates the StudentResult object and invokes its constructor.
+
+Expected output:
+
+Student Name: Kajal
+Roll No: 101
+Total Marks: 400
+Average Marks: 80.0
+
+
+CONCLUSION
+
+This assignment demonstrates important Java concepts including Java's evolution and platform independence, bytecode and JVM, garbage collection, object reachability, operator precedence, classes and objects, constructors, access modifiers, the this keyword, encapsulation, method overloading, and recursion.
